@@ -7,11 +7,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.davidgllez.jetpackcompose_section9.ui.component.AlertDialogInfo
 import com.davidgllez.jetpackcompose_section9.ui.component.ToolbarForm
 import com.davidgllez.jetpackcompose_section9.ui.theme.JetpackCompose_Section9Theme
 
@@ -21,15 +22,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackCompose_Section9Theme {
-                // A surface container using the 'background' color from the theme
+                var openDialog by remember { mutableStateOf(false) }
                 Scaffold(
-                    topBar = { ToolbarForm { Log.i("ClickJC", "onCreate: Launch Dialog!") } },
+                    topBar = { ToolbarForm { openDialog = true } },
                     modifier = Modifier.fillMaxSize(),
                     backgroundColor = MaterialTheme.colors.background,
                     content = {
                         CFrom()
                     }
                 )
+
+                if (openDialog) {
+                    AlertDialogInfo(
+                        info = "Test info JC",
+                        onDialogChange = { openDialog = false })
+                }
             }
         }
     }

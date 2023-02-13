@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">JetpackCompose_Section9</string>
     <string name="app_bar_action_send">Send</string>
+    <string name="dialog_title">Data Collected</string>
+    <string name="dialog_ok">Clear</string>
+    <string name="dialog_cancel">Cancel</string>
 </resources>
