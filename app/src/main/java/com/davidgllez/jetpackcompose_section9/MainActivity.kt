@@ -97,8 +97,16 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
     Column(modifier = Modifier
         .padding(dimensionResource(id = R.dimen.common_padding_default))
         .verticalScroll(rememberScrollState())) {
-        EtCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano)) { nameValue = it }
-        EtCustom() { surNameValue = it }
+        //Name
+        EtCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
+            label = stringResource(id = R.string.hint_name),
+            icon = painterResource(id = R.drawable.ic_person)) { nameValue = it }
+        //Surname
+        EtCustom(label = stringResource(id = R.string.hint_surname),
+            icon = painterResource(id = R.drawable.ic_person)) { surNameValue = it }
+        //Birth Place
+        EtCustom(label = stringResource(id = R.string.hint_birth_place),
+            icon = painterResource(id = R.drawable.ic_place)) { birthPlaceValue = it }
     }
 }
 

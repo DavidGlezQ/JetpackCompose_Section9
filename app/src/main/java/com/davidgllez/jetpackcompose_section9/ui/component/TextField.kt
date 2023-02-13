@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -21,6 +22,8 @@ import com.davidgllez.jetpackcompose_section9.R
 
 @Composable
 fun EtCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_default),
+             label: String,
+             icon: Painter,
              onValueChanged: (String) -> Unit) {
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
@@ -34,9 +37,9 @@ fun EtCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_defa
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = paddingTop),
-            label = { Text(text = stringResource(id = R.string.hint_surname)) },
+            label = { Text(text = label) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, capitalization = KeyboardCapitalization.Words),
-            leadingIcon = { Icon(painter = painterResource(id = R.drawable.ic_person), contentDescription = null) }
+            leadingIcon = { Icon(painter = icon, contentDescription = null) }
         )
         Text(text = stringResource(id = R.string.help_required),
             style = MaterialTheme.typography.caption,
