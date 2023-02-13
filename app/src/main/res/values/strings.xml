@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">JetpackCompose_Section9</string>
+    <string name="app_bar_action_send">Send</string>
 </resources>
