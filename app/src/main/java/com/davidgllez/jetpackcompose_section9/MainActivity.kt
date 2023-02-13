@@ -12,9 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.davidgllez.jetpackcompose_section9.ui.Utils.joinData
 import com.davidgllez.jetpackcompose_section9.ui.component.AlertDialogInfo
 import com.davidgllez.jetpackcompose_section9.ui.component.ToolbarForm
 import com.davidgllez.jetpackcompose_section9.ui.theme.JetpackCompose_Section9Theme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -22,19 +24,34 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackCompose_Section9Theme {
+                val scaffoldState = rememberScaffoldState()
+                val scope = rememberCoroutineScope()
+
                 var openDialog by remember { mutableStateOf(false) }
+                var userData by remember { mutableStateOf("") }
                 Scaffold(
-                    topBar = { ToolbarForm { openDialog = true } },
+                    scaffoldState = scaffoldState,
+                    topBar = { ToolbarForm {
+                        if (userData.isNotEmpty()) {
+                            openDialog = true
+                        } else {
+                            scope.launch { scaffoldState.snackbarHostState
+                                .showSnackbar(getString(R.string.app_bar_invalid_form)) }
+                        }
+                        openDialog = true
+                    } },
                     modifier = Modifier.fillMaxSize(),
                     backgroundColor = MaterialTheme.colors.background,
                     content = {
-                        CFrom()
+                        CFrom {
+                            userData = it
+                        }
                     }
                 )
 
                 if (openDialog) {
                     AlertDialogInfo(
-                        info = "Test info JC",
+                        info = userData,
                         onDialogChange = { openDialog = false })
                 }
             }
@@ -47,12 +64,28 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     JetpackCompose_Section9Theme {
-        CFrom()
+        CFrom {
+
+        }
     }
 }
 
 @Composable
-fun CFrom() {
+fun CFrom(inputCallBack: (String) -> Unit) {
+    var nameValue by remember { mutableStateOf("") }
+    var surNameValue by remember { mutableStateOf("") }
+    var heightValue by remember { mutableStateOf("") }
+    var birthDateValue by remember { mutableStateOf("") }
+    var countryValue by remember { mutableStateOf("") }
+    var birthPlaceValue by remember { mutableStateOf("") }
+    var notesValue by remember { mutableStateOf("") }
+
+    if (nameValue.isEmpty() || surNameValue.isEmpty() || heightValue.isEmpty()) {
+        inputCallBack("")
+    } else {
+        inputCallBack(joinData(nameValue, surNameValue, heightValue, birthDateValue,
+            countryValue, birthDateValue, notesValue))
+    }
 
 }
 

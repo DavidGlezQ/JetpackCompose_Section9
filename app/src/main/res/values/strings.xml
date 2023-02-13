@@ -4,4 +4,5 @@
     <string name="dialog_title">Data Collected</string>
     <string name="dialog_ok">Clear</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="app_bar_invalid_form">Incomplete form, please review.</string>
 </resources>
