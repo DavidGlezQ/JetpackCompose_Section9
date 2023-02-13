@@ -5,15 +5,22 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.davidgllez.jetpackcompose_section9.ui.Utils.joinData
 import com.davidgllez.jetpackcompose_section9.ui.component.AlertDialogInfo
+import com.davidgllez.jetpackcompose_section9.ui.component.EtCustom
 import com.davidgllez.jetpackcompose_section9.ui.component.ToolbarForm
 import com.davidgllez.jetpackcompose_section9.ui.theme.JetpackCompose_Section9Theme
 import kotlinx.coroutines.launch
@@ -71,7 +78,7 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun CFrom(inputCallBack: (String) -> Unit) {
+fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
     var nameValue by remember { mutableStateOf("") }
     var surNameValue by remember { mutableStateOf("") }
     var heightValue by remember { mutableStateOf("") }
@@ -87,5 +94,11 @@ fun CFrom(inputCallBack: (String) -> Unit) {
             countryValue, birthDateValue, notesValue))
     }
 
+    Column(modifier = Modifier
+        .padding(dimensionResource(id = R.dimen.common_padding_default))
+        .verticalScroll(rememberScrollState())) {
+        EtCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano)) { nameValue = it }
+        EtCustom() { surNameValue = it }
+    }
 }
 
