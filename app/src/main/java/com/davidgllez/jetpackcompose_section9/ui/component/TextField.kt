@@ -1,6 +1,9 @@
 package com.davidgllez.jetpackcompose_section9.ui.component
 
+import android.app.DatePickerDialog
+import android.content.Context
 import android.util.Log
+import android.widget.DatePicker
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -16,6 +20,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import com.davidgllez.jetpackcompose_section9.R
+import java.util.*
 
 /**
  * Created by davidgonzalez on 13/02/23
@@ -34,8 +39,17 @@ fun TfCustom(modifier: Modifier = Modifier,
              isLikedButton: Boolean = false,
              onValueChanged: (String) -> Unit) {
 
+    //Calendar Picker Setting
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance()
+    calendar.time = Date()
+    val datePickerDialog = DatePickerDialog(context, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
+        textValue = "$dayOfMonth/${month + 1}/$year"
+        onValueChanged(textValue)
+    }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+
 
     Column(modifier = modifier) {
         OutlinedTextField(value = textValue,
@@ -56,7 +70,7 @@ fun TfCustom(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(top = paddingTop)
                 //Validacion para que al momento de dar click fuera de la caja de texto no se lance el evento
-                .clickable { if (isLikedButton) Log.i("Click", "ClickValidation ") },
+                .clickable { if (isLikedButton) datePickerDialog.show() },
             label = { Text(text = stringResource(id = labelRes)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
                 capitalization = KeyboardCapitalization.Words),
