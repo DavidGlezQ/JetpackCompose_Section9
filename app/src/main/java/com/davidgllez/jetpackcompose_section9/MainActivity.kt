@@ -2,7 +2,6 @@ package com.davidgllez.jetpackcompose_section9
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -18,10 +17,9 @@ import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.davidgllez.jetpackcompose_section9.ui.Utils.joinData
 import com.davidgllez.jetpackcompose_section9.ui.component.AlertDialogInfo
-import com.davidgllez.jetpackcompose_section9.ui.component.EtCustom
+import com.davidgllez.jetpackcompose_section9.ui.component.TfCustom
 import com.davidgllez.jetpackcompose_section9.ui.component.ToolbarForm
 import com.davidgllez.jetpackcompose_section9.ui.theme.JetpackCompose_Section9Theme
 import kotlinx.coroutines.launch
@@ -99,22 +97,24 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
         .padding(dimensionResource(id = R.dimen.common_padding_default))
         .verticalScroll(rememberScrollState())) {
         //Name
-        EtCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
+        TfCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
             label = stringResource(id = R.string.hint_name),
             icon = painterResource(id = R.drawable.ic_person),
             maxLength = integerResource(id = R.integer.name_max_length),
             isRequired = true) { nameValue = it }
         //Surname
-        EtCustom(label = stringResource(id = R.string.hint_surname),
+        TfCustom(label = stringResource(id = R.string.hint_surname),
             icon = painterResource(id = R.drawable.ic_person),
             isRequired = true) { surNameValue = it }
         //Height
-        EtCustom(label = stringResource(id = R.string.hint_height),
+        TfCustom(label = stringResource(id = R.string.hint_height),
             icon = painterResource(id = R.drawable.ic_height),
             maxLength = integerResource(id = R.integer.height_max_length),
-            isRequired = true) { heightValue = it }
+            isRequired = true,
+            minValue = integerResource(id = R.integer.name_min_length),
+            errorRes = R.string.help_min_height_valid) { heightValue = it }
         //Birth Place
-        EtCustom(label = stringResource(id = R.string.hint_birth_place),
+        TfCustom(label = stringResource(id = R.string.hint_birth_place),
             icon = painterResource(id = R.drawable.ic_place)) { birthPlaceValue = it }
     }
 }

@@ -9,7 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -21,12 +20,14 @@ import com.davidgllez.jetpackcompose_section9.R
  */
 
 @Composable
-fun EtCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_default),
+fun TfCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_default),
              label: String,
              icon: Painter,
              maxLength: Int? = null,
              isRequired: Boolean = false,
              isSingleLine: Boolean = true,
+             minValue: Int = 0,
+             errorRes: Int = R.string.help_required,
              onValueChanged: (String) -> Unit) {
 
     var textValue by remember { mutableStateOf("") }
@@ -43,6 +44,8 @@ fun EtCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_defa
                     }
                 }
                 isError = it.isEmpty() && isRequired
+                //Validacion para convertir el valor a cero en caso de ser diferente
+                if (minValue > 0) isError = (textValue.toIntOrNull() ?: 0) < minValue
                 onValueChanged(textValue)
             },
             modifier = Modifier
@@ -55,7 +58,9 @@ fun EtCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_defa
             singleLine = isSingleLine
         )
         if (isRequired) {
-            Text(text = stringResource(id = R.string.help_required),
+
+            Text(text = if (isError) stringResource(id = errorRes)
+            else stringResource(id = R.string.help_required),
                 style = MaterialTheme.typography.caption,
                 color = if (isError) MaterialTheme.colors.error
                 else MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
