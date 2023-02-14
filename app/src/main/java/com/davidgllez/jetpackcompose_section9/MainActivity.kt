@@ -6,6 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -13,6 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidgllez.jetpackcompose_section9.ui.Utils.joinData
 import com.davidgllez.jetpackcompose_section9.ui.component.AlertDialogInfo
@@ -98,11 +101,15 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
             labelRes = R.string.hint_name ,
             iconRes = R.drawable.ic_person ,
             maxLength = integerResource(id = R.integer.name_max_length),
-            isRequired = true) { nameValue = it }
+            isRequired = true,
+            keyBoardOption = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
+        ) { nameValue = it }
         //Surname
         TfCustom(labelRes = R.string.hint_surname,
             iconRes = R.drawable.ic_person,
-            isRequired = true) { surNameValue = it }
+            isRequired = true,
+            keyBoardOption = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
+        ) { surNameValue = it }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(
             dimensionResource(id = R.dimen.common_padding_default))) {
             //Height
@@ -111,7 +118,9 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
                 maxLength = integerResource(id = R.integer.height_max_length),
                 isRequired = true,
                 minValue = integerResource(id = R.integer.name_min_length),
-                errorRes = R.string.help_min_height_valid) { heightValue = it }
+                errorRes = R.string.help_min_height_valid,
+                keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Number)
+            ) { heightValue = it }
             //BirthDate
             TfCustom(modifier = Modifier.weight(60f), labelRes = R.string.hint_birth_place,
                 iconRes = R.drawable.ic_calendar_today, isLikedButton = true) { birthDateValue = it }
