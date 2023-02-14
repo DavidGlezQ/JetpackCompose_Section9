@@ -25,6 +25,8 @@ fun EtCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_defa
              label: String,
              icon: Painter,
              maxLength: Int? = null,
+             isRequired: Boolean = false,
+             isSingleLine: Boolean = true,
              onValueChanged: (String) -> Unit) {
 
     var textValue by remember { mutableStateOf("") }
@@ -40,23 +42,27 @@ fun EtCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_defa
                         textValue = it
                     }
                 }
-                isError = it.isEmpty()
+                isError = it.isEmpty() && isRequired
                 onValueChanged(textValue)
             },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = paddingTop),
             label = { Text(text = label) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, capitalization = KeyboardCapitalization.Words),
-            leadingIcon = { Icon(painter = icon, contentDescription = null) }
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
+                capitalization = KeyboardCapitalization.Words),
+            leadingIcon = { Icon(painter = icon, contentDescription = null) },
+            singleLine = isSingleLine
         )
-        Text(text = stringResource(id = R.string.help_required),
-            style = MaterialTheme.typography.caption,
-            color = if (isError) MaterialTheme.colors.error
-            else MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
-            modifier = Modifier.padding(
-                start = dimensionResource(id = R.dimen.common_padding_default),
-                top = dimensionResource(id = R.dimen.common_padding_micro)
-            ))
+        if (isRequired) {
+            Text(text = stringResource(id = R.string.help_required),
+                style = MaterialTheme.typography.caption,
+                color = if (isError) MaterialTheme.colors.error
+                else MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
+                modifier = Modifier.padding(
+                    start = dimensionResource(id = R.dimen.common_padding_default),
+                    top = dimensionResource(id = R.dimen.common_padding_micro)
+                ))
+        }
     }
 }

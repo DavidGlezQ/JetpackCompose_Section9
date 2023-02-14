@@ -102,14 +102,17 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
         EtCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
             label = stringResource(id = R.string.hint_name),
             icon = painterResource(id = R.drawable.ic_person),
-            maxLength = integerResource(id = R.integer.name_max_length)) { nameValue = it }
+            maxLength = integerResource(id = R.integer.name_max_length),
+            isRequired = true) { nameValue = it }
         //Surname
         EtCustom(label = stringResource(id = R.string.hint_surname),
-            icon = painterResource(id = R.drawable.ic_person)) { surNameValue = it }
+            icon = painterResource(id = R.drawable.ic_person),
+            isRequired = true) { surNameValue = it }
         //Height
         EtCustom(label = stringResource(id = R.string.hint_height),
             icon = painterResource(id = R.drawable.ic_height),
-            maxLength = integerResource(id = R.integer.height_max_length)) { heightValue = it }
+            maxLength = integerResource(id = R.integer.height_max_length),
+            isRequired = true) { heightValue = it }
         //Birth Place
         EtCustom(label = stringResource(id = R.string.hint_birth_place),
             icon = painterResource(id = R.drawable.ic_place)) { birthPlaceValue = it }
