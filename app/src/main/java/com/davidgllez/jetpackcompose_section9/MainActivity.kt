@@ -14,6 +14,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -100,10 +101,15 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
         //Name
         EtCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
             label = stringResource(id = R.string.hint_name),
-            icon = painterResource(id = R.drawable.ic_person)) { nameValue = it }
+            icon = painterResource(id = R.drawable.ic_person),
+            maxLength = integerResource(id = R.integer.name_max_length)) { nameValue = it }
         //Surname
         EtCustom(label = stringResource(id = R.string.hint_surname),
             icon = painterResource(id = R.drawable.ic_person)) { surNameValue = it }
+        //Height
+        EtCustom(label = stringResource(id = R.string.hint_height),
+            icon = painterResource(id = R.drawable.ic_height),
+            maxLength = integerResource(id = R.integer.height_max_length)) { heightValue = it }
         //Birth Place
         EtCustom(label = stringResource(id = R.string.hint_birth_place),
             icon = painterResource(id = R.drawable.ic_place)) { birthPlaceValue = it }

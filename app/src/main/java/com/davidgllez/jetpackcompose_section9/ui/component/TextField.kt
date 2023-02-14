@@ -24,15 +24,24 @@ import com.davidgllez.jetpackcompose_section9.R
 fun EtCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_default),
              label: String,
              icon: Painter,
+             maxLength: Int? = null,
              onValueChanged: (String) -> Unit) {
+
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
+
     Column {
         OutlinedTextField(value = textValue,
             onValueChange = {
-                textValue = it
+                if (maxLength == null) {
+                    textValue = it
+                } else {
+                    if (it.length <= maxLength) {
+                        textValue = it
+                    }
+                }
                 isError = it.isEmpty()
-                onValueChanged(it)
+                onValueChanged(textValue)
             },
             modifier = Modifier
                 .fillMaxWidth()
