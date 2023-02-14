@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
@@ -15,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidgllez.jetpackcompose_section9.ui.Utils.joinData
 import com.davidgllez.jetpackcompose_section9.ui.component.AlertDialogInfo
@@ -98,24 +95,30 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
         .verticalScroll(rememberScrollState())) {
         //Name
         TfCustom(paddingTop = dimensionResource(id = R.dimen.common_padding_nano),
-            label = stringResource(id = R.string.hint_name),
-            icon = painterResource(id = R.drawable.ic_person),
+            labelRes = R.string.hint_name ,
+            iconRes = R.drawable.ic_person ,
             maxLength = integerResource(id = R.integer.name_max_length),
             isRequired = true) { nameValue = it }
         //Surname
-        TfCustom(label = stringResource(id = R.string.hint_surname),
-            icon = painterResource(id = R.drawable.ic_person),
+        TfCustom(labelRes = R.string.hint_surname,
+            iconRes = R.drawable.ic_person,
             isRequired = true) { surNameValue = it }
-        //Height
-        TfCustom(label = stringResource(id = R.string.hint_height),
-            icon = painterResource(id = R.drawable.ic_height),
-            maxLength = integerResource(id = R.integer.height_max_length),
-            isRequired = true,
-            minValue = integerResource(id = R.integer.name_min_length),
-            errorRes = R.string.help_min_height_valid) { heightValue = it }
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(
+            dimensionResource(id = R.dimen.common_padding_default))) {
+            //Height
+            TfCustom(modifier = Modifier.weight(40f), labelRes = R.string.hint_height,
+                iconRes = R.drawable.ic_height,
+                maxLength = integerResource(id = R.integer.height_max_length),
+                isRequired = true,
+                minValue = integerResource(id = R.integer.name_min_length),
+                errorRes = R.string.help_min_height_valid) { heightValue = it }
+            //BirthDate
+            TfCustom(modifier = Modifier.weight(60f), labelRes = R.string.hint_birth_place,
+                iconRes = R.drawable.ic_calendar_today) { birthDateValue = it }
+        }
         //Birth Place
-        TfCustom(label = stringResource(id = R.string.hint_birth_place),
-            icon = painterResource(id = R.drawable.ic_place)) { birthPlaceValue = it }
+        TfCustom(labelRes = R.string.hint_birth_place,
+            iconRes = R.drawable.ic_place) { birthPlaceValue = it }
     }
 }
 

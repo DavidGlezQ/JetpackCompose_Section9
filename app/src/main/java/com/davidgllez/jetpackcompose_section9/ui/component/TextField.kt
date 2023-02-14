@@ -7,8 +7,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -20,9 +20,10 @@ import com.davidgllez.jetpackcompose_section9.R
  */
 
 @Composable
-fun TfCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_default),
-             label: String,
-             icon: Painter,
+fun TfCustom(modifier: Modifier = Modifier,
+             paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_default),
+             labelRes: Int,
+             iconRes: Int,
              maxLength: Int? = null,
              isRequired: Boolean = false,
              isSingleLine: Boolean = true,
@@ -33,7 +34,7 @@ fun TfCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_defa
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
 
-    Column {
+    Column(modifier = modifier) {
         OutlinedTextField(value = textValue,
             onValueChange = {
                 if (maxLength == null) {
@@ -51,10 +52,10 @@ fun TfCustom(paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_defa
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = paddingTop),
-            label = { Text(text = label) },
+            label = { Text(text = stringResource(id = labelRes)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
                 capitalization = KeyboardCapitalization.Words),
-            leadingIcon = { Icon(painter = icon, contentDescription = null) },
+            leadingIcon = { Icon(painter = painterResource(id = iconRes), contentDescription = null) },
             singleLine = isSingleLine
         )
         if (isRequired) {
