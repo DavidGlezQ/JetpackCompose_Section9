@@ -114,7 +114,7 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
                 errorRes = R.string.help_min_height_valid) { heightValue = it }
             //BirthDate
             TfCustom(modifier = Modifier.weight(60f), labelRes = R.string.hint_birth_place,
-                iconRes = R.drawable.ic_calendar_today) { birthDateValue = it }
+                iconRes = R.drawable.ic_calendar_today, isLikedButton = true) { birthDateValue = it }
         }
         //Birth Place
         TfCustom(labelRes = R.string.hint_birth_place,

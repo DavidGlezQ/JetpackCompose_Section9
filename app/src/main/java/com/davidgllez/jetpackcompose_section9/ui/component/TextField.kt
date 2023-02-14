@@ -1,5 +1,7 @@
 package com.davidgllez.jetpackcompose_section9.ui.component
 
+import android.util.Log
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -29,6 +31,7 @@ fun TfCustom(modifier: Modifier = Modifier,
              isSingleLine: Boolean = true,
              minValue: Int = 0,
              errorRes: Int = R.string.help_required,
+             isLikedButton: Boolean = false,
              onValueChanged: (String) -> Unit) {
 
     var textValue by remember { mutableStateOf("") }
@@ -51,12 +54,17 @@ fun TfCustom(modifier: Modifier = Modifier,
             },
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = paddingTop),
+                .padding(top = paddingTop)
+                //Validacion para que al momento de dar click fuera de la caja de texto no se lance el evento
+                .clickable { if (isLikedButton) Log.i("Click", "ClickValidation ") },
             label = { Text(text = stringResource(id = labelRes)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text,
                 capitalization = KeyboardCapitalization.Words),
             leadingIcon = { Icon(painter = painterResource(id = iconRes), contentDescription = null) },
-            singleLine = isSingleLine
+            singleLine = isSingleLine,
+            isError = isError,
+            readOnly = isLikedButton,
+            enabled = !isLikedButton
         )
         if (isRequired) {
 
