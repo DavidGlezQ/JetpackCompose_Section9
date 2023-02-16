@@ -17,11 +17,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import com.davidgllez.jetpackcompose_section9.R
@@ -116,4 +118,16 @@ fun TfCustom(modifier: Modifier = Modifier,
                 ))
         }
     }
+}
+
+@Composable
+fun CounterMaxLength(currentLength: Int, maxLengthRes: Int) {
+    Text(text = "$currentLength/${integerResource(id = maxLengthRes)}",
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = dimensionResource(id = R.dimen.common_padding_micro)),
+        textAlign = TextAlign.Right,
+        color = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.medium),
+        style = MaterialTheme.typography.caption
+    )
 }

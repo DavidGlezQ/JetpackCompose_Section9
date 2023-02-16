@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidgllez.jetpackcompose_section9.ui.Utils.joinData
 import com.davidgllez.jetpackcompose_section9.ui.component.AlertDialogInfo
+import com.davidgllez.jetpackcompose_section9.ui.component.CounterMaxLength
 import com.davidgllez.jetpackcompose_section9.ui.component.TfCustom
 import com.davidgllez.jetpackcompose_section9.ui.component.ToolbarForm
 import com.davidgllez.jetpackcompose_section9.ui.theme.JetpackCompose_Section9Theme
@@ -136,6 +137,7 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
             isSingleLine = false,
             maxLength = integerResource(id = R.integer.notes_max_length),
             keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done)) { notesValue = it }
+        CounterMaxLength(currentLength = notesValue.length, maxLengthRes = R.integer.notes_max_length)
     }
 }
 
