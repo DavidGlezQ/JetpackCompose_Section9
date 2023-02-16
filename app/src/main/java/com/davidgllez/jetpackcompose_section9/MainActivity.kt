@@ -129,6 +129,13 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
         //Birth Place
         TfCustom(labelRes = R.string.hint_birth_place,
             iconRes = R.drawable.ic_place) { birthPlaceValue = it }
+        //Notes
+        TfCustom(
+            labelRes = R.string.hint_notes,
+            iconRes = R.drawable.ic_notes,
+            isSingleLine = false,
+            maxLength = integerResource(id = R.integer.notes_max_length),
+            keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done)) { notesValue = it }
     }
 }
 
