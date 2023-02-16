@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -77,7 +78,11 @@ fun TfCustom(modifier: Modifier = Modifier,
                 .clickable { if (isLikedButton) datePickerDialog.show() },
             label = { Text(text = stringResource(id = labelRes)) },
             keyboardOptions = KeyboardOptions(keyboardType = keyBoardOption?.keyboardType ?: KeyboardType.Text,
-                 capitalization = keyBoardOption?.capitalization ?: KeyboardCapitalization.Sentences),
+                 capitalization = keyBoardOption?.capitalization ?: KeyboardCapitalization.Sentences,
+                imeAction =
+                if (keyBoardOption == null || keyBoardOption.imeAction == ImeAction.Default)
+                    ImeAction.Next
+                else keyBoardOption.imeAction),
             leadingIcon = { Icon(painter = painterResource(id = iconRes), contentDescription = null) },
             singleLine = isSingleLine,
             isError = isError,

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -119,7 +120,7 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
                 isRequired = true,
                 minValue = integerResource(id = R.integer.name_min_length),
                 errorRes = R.string.help_min_height_valid,
-                keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Number)
+                keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done)
             ) { heightValue = it }
             //BirthDate
             TfCustom(modifier = Modifier.weight(60f), labelRes = R.string.hint_birth_place,
