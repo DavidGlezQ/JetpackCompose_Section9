@@ -139,7 +139,7 @@ fun CFrom(clearForm: Boolean = false, inputCallBack: (String) -> Unit) { // Form
         }
         //Countries
         //SpCountries()
-        AutoCompleteTextFieldCountries()
+        AutoCompleteTextFieldCountries() { countryValue = it }
         //Birth Place
         TfCustom(labelRes = R.string.hint_birth_place,
             iconRes = R.drawable.ic_place,
