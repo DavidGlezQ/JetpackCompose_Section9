@@ -13,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.integerResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
@@ -37,6 +36,8 @@ class MainActivity : ComponentActivity() {
 
                 var openDialog by remember { mutableStateOf(false) }
                 var userData by remember { mutableStateOf("") }
+
+                var clearForm by remember { mutableStateOf(false) }
                 Scaffold(
                     scaffoldState = scaffoldState,
                     topBar = { ToolbarForm {
@@ -51,8 +52,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     backgroundColor = MaterialTheme.colors.background,
                     content = {
-                        CFrom {
+                        CFrom(clearForm = clearForm) {
                             userData = it
+                            if (clearForm && userData.isEmpty()) {
+                                clearForm = false
+                            }
                         }
                     }
                 )
@@ -60,13 +64,15 @@ class MainActivity : ComponentActivity() {
                 if (openDialog) {
                     AlertDialogInfo(
                         info = userData,
-                        onDialogChange = { openDialog = false })
+                        onDialogChange = { clear ->
+                            openDialog = false
+                            clearForm = clear
+                        })
                 }
             }
         }
     }
 }
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
@@ -79,7 +85,7 @@ fun DefaultPreview() {
 }
 
 @Composable
-fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
+fun CFrom(clearForm: Boolean = false, inputCallBack: (String) -> Unit) { // Formulario
     var nameValue by remember { mutableStateOf("") }
     var surNameValue by remember { mutableStateOf("") }
     var heightValue by remember { mutableStateOf("") }
@@ -104,13 +110,15 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
             iconRes = R.drawable.ic_person ,
             maxLength = integerResource(id = R.integer.name_max_length),
             isRequired = true,
-            keyBoardOption = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
+            keyBoardOption = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+            clearValue = clearForm
         ) { nameValue = it }
         //Surname
         TfCustom(labelRes = R.string.hint_surname,
             iconRes = R.drawable.ic_person,
             isRequired = true,
-            keyBoardOption = KeyboardOptions(capitalization = KeyboardCapitalization.Words)
+            keyBoardOption = KeyboardOptions(capitalization = KeyboardCapitalization.Words),
+            clearValue = clearForm
         ) { surNameValue = it }
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(
             dimensionResource(id = R.dimen.common_padding_default))) {
@@ -121,22 +129,31 @@ fun CFrom(inputCallBack: (String) -> Unit) { // Formulario
                 isRequired = true,
                 minValue = integerResource(id = R.integer.name_min_length),
                 errorRes = R.string.help_min_height_valid,
-                keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done)
+                keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+                clearValue = clearForm
             ) { heightValue = it }
             //BirthDate
-            TfCustom(modifier = Modifier.weight(60f), labelRes = R.string.hint_birth_place,
-                iconRes = R.drawable.ic_calendar_today, isLikedButton = true) { birthDateValue = it }
+            TfCustom(modifier = Modifier.weight(60f),
+                labelRes = R.string.hint_birth_place,
+                iconRes = R.drawable.ic_calendar_today,
+                isLikedButton = true,
+                clearValue = clearForm
+            ) { birthDateValue = it }
         }
         //Birth Place
         TfCustom(labelRes = R.string.hint_birth_place,
-            iconRes = R.drawable.ic_place) { birthPlaceValue = it }
+            iconRes = R.drawable.ic_place,
+            clearValue = clearForm
+        ) { birthPlaceValue = it }
         //Notes
         TfCustom(
             labelRes = R.string.hint_notes,
             iconRes = R.drawable.ic_notes,
             isSingleLine = false,
             maxLength = integerResource(id = R.integer.notes_max_length),
-            keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done)) { notesValue = it }
+            keyBoardOption = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Done),
+            clearValue = clearForm
+        ) { notesValue = it }
         CounterMaxLength(currentLength = notesValue.length, maxLengthRes = R.integer.notes_max_length)
     }
 }

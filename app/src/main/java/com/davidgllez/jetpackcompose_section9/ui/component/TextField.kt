@@ -50,11 +50,15 @@ fun TfCustom(modifier: Modifier = Modifier,
              errorRes: Int = R.string.help_required,
              isLikedButton: Boolean = false,
              keyBoardOption: KeyboardOptions? = null,
+             clearValue: Boolean = false,
              onValueChanged: (String) -> Unit) {
 
     //Calendar Picker Setting
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
+
+    if(clearValue) textValue = ""
+
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
     calendar.time = Date()
