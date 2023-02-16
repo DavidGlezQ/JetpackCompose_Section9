@@ -6,11 +6,16 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -30,6 +35,7 @@ import java.util.*
 fun showTextField() {
     TfCustom(labelRes = R.string.app_name, iconRes = R.drawable.ic_person) { "" }
 }
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TfCustom(modifier: Modifier = Modifier,
              paddingTop: Dp = dimensionResource(id = R.dimen.common_padding_default),
@@ -56,7 +62,10 @@ fun TfCustom(modifier: Modifier = Modifier,
     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
 
 
+    //OutLinedTextField
     Column(modifier = modifier) {
+        val keyboard = LocalSoftwareKeyboardController.current
+        val focusManager = LocalFocusManager.current
         OutlinedTextField(value = textValue,
             onValueChange = {
                 if (maxLength == null) {
@@ -77,12 +86,17 @@ fun TfCustom(modifier: Modifier = Modifier,
                 //Validacion para que al momento de dar click fuera de la caja de texto no se lance el evento
                 .clickable { if (isLikedButton) datePickerDialog.show() },
             label = { Text(text = stringResource(id = labelRes)) },
-            keyboardOptions = KeyboardOptions(keyboardType = keyBoardOption?.keyboardType ?: KeyboardType.Text,
-                 capitalization = keyBoardOption?.capitalization ?: KeyboardCapitalization.Sentences,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = keyBoardOption?.keyboardType ?: KeyboardType.Text,
+                capitalization = keyBoardOption?.capitalization ?: KeyboardCapitalization.Sentences,
                 imeAction =
                 if (keyBoardOption == null || keyBoardOption.imeAction == ImeAction.Default)
                     ImeAction.Next
                 else keyBoardOption.imeAction),
+            keyboardActions = KeyboardActions(
+                onDone = { keyboard?.hide() },
+                //Diferentes opciones de teclado
+                onNext = { focusManager.moveFocus(FocusDirection.Next /* FocusDirection.Up */) }),
             leadingIcon = { Icon(painter = painterResource(id = iconRes), contentDescription = null) },
             singleLine = isSingleLine,
             isError = isError,
