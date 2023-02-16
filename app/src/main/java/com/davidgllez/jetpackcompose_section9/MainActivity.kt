@@ -18,10 +18,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import com.davidgllez.jetpackcompose_section9.ui.Utils.joinData
-import com.davidgllez.jetpackcompose_section9.ui.component.AlertDialogInfo
-import com.davidgllez.jetpackcompose_section9.ui.component.CounterMaxLength
-import com.davidgllez.jetpackcompose_section9.ui.component.TfCustom
-import com.davidgllez.jetpackcompose_section9.ui.component.ToolbarForm
+import com.davidgllez.jetpackcompose_section9.ui.component.*
 import com.davidgllez.jetpackcompose_section9.ui.theme.JetpackCompose_Section9Theme
 import kotlinx.coroutines.launch
 
@@ -140,6 +137,8 @@ fun CFrom(clearForm: Boolean = false, inputCallBack: (String) -> Unit) { // Form
                 clearValue = clearForm
             ) { birthDateValue = it }
         }
+        //Countries
+        SpCountries()
         //Birth Place
         TfCustom(labelRes = R.string.hint_birth_place,
             iconRes = R.drawable.ic_place,
