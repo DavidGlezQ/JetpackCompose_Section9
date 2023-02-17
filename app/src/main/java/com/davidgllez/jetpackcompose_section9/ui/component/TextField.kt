@@ -1,7 +1,6 @@
 package com.davidgllez.jetpackcompose_section9.ui.component
 
-import android.app.DatePickerDialog
-import android.widget.DatePicker
+
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -53,20 +52,13 @@ fun TfCustom(modifier: Modifier = Modifier,
              clearValue: Boolean = false,
              onValueChanged: (String) -> Unit) {
 
+    val context = LocalContext.current
+
     //Calendar Picker Setting
     var textValue by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
 
     if(clearValue) textValue = ""
-
-    val context = LocalContext.current
-    val calendar = Calendar.getInstance()
-    calendar.time = Date()
-    val datePickerDialog = DatePickerDialog(context, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-        textValue = "$dayOfMonth/${month + 1}/$year"
-        onValueChanged(textValue)
-    }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
-
 
     //OutLinedTextField
     Column(modifier = modifier) {
@@ -90,7 +82,10 @@ fun TfCustom(modifier: Modifier = Modifier,
                 .fillMaxWidth()
                 .padding(top = paddingTop)
                 //Validacion para que al momento de dar click fuera de la caja de texto no se lance el evento
-                .clickable { if (isLikedButton) datePickerDialog.show() },
+                .clickable { if (isLikedButton) datePickerTextField(context) {
+                    textValue = it
+                    onValueChanged(textValue)
+                } },
             label = { Text(text = stringResource(id = labelRes)) },
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyBoardOption?.keyboardType ?: KeyboardType.Text,

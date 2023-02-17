@@ -24,9 +24,10 @@ import com.davidgllez.jetpackcompose_section9.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AutoCompleteTextFieldCountries(onValueChanged: (String) -> Unit) {
+fun AutoCompleteTextFieldCountries(clearValue: Boolean = false, onValueChanged: (String) -> Unit) {
     var selectedText by remember { mutableStateOf("") }
     var isExpanded by remember { mutableStateOf(false) }
+    if(clearValue) selectedText = ""
     val countries = arrayOf("Mexico", "Spain", "Canada", "USA", "Germany", "Chile", "Uruguay")
     
     ExposedDropdownMenuBox(expanded = isExpanded, onExpandedChange = {}) {
